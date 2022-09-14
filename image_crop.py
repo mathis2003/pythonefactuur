@@ -1,4 +1,6 @@
 import cv2
+import pytesseract
+import re
 
 
 def compare_images(im1, im2):
@@ -32,6 +34,7 @@ images = [
     TemplateData("template3.png", [30, 150, 500, 700], [700, 800, 500, 700]),
 ]
 
+print("input factuur:")
 factuur_image = cv2.imread(input())
 
 closest_img = 0
@@ -48,15 +51,6 @@ for i in range(len(images)):
         closest_img = i
 
 price_pos = images[closest_img].price_coordinates
-cv2.imshow("Price", factuur_image[price_pos[0]:price_pos[1], price_pos[2]:price_pos[3]])
-cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-
-
-
-
-
-
-
-
+price = pytesseract.image_to_string(factuur_image[price_pos[0]:price_pos[1], price_pos[2]:price_pos[3]])
+price = re.sub(r'[^0-9,]', '', price)
+print(price)
