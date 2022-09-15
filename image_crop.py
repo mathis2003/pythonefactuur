@@ -60,14 +60,22 @@ for i in range(len(images)):
 price_pos = images[closest_img].price_coordinates
 price = pytesseract.image_to_string(factuur_image[price_pos[0]:price_pos[1], price_pos[2]:price_pos[3]])
 price = re.sub(r'[^0-9,]', '', price)
+price = re.sub(",",".", price)
 print("amount incl vat = "+price)
 
 vat_pos = images[closest_img].vat_coordinates
 vat = pytesseract.image_to_string(factuur_image[vat_pos[0]:vat_pos[1], vat_pos[2]:vat_pos[3]])
 vat = re.sub(r'[^0-9,]', '', vat)
+vat = re.sub(",",".", vat)
 print("vat = "+vat)
 
 excl_vat_pos = images[closest_img].excl_vat_coordinates
 excl_vat = pytesseract.image_to_string(factuur_image[excl_vat_pos[0]:excl_vat_pos[1], excl_vat_pos[2]:excl_vat_pos[3]])
 excl_vat = re.sub(r'[^0-9,]', '', excl_vat)
+excl_vat = re.sub(",",".", excl_vat)
 print("amount excl vat = "+excl_vat)
+
+if float(price) - float(vat) == float(excl_vat):
+    print ("reconciliation = OK")
+elif float(price) - float(vat) != float(excl_vat):
+    print ("reconciliation not OK")
