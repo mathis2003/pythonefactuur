@@ -22,17 +22,18 @@ def compare_images(im1, im2):
     return len(similar_regions) / len(matches)
 
 class TemplateData:
-    def __init__(self, name, logo_coordinates, price_coordinates, vat_coordinates, excl_vat_coordinates):
+    def __init__(self, name, logo_coordinates, price_coordinates, vat_coordinates, excl_vat_coordinates, counterparty_coordinates):
         self.name = name
         self.logo_coordinates = logo_coordinates
         self.price_coordinates = price_coordinates
         self.vat_coordinates = vat_coordinates
         self.excl_vat_coordinates = excl_vat_coordinates
+        self.counterparty_coordinates = counterparty_coordinates
 
 images = [
-    TemplateData("template1.png", [60, 150, 60, 400], [460, 500, 250, 600], [450, 470, 400, 550], [430, 450, 400, 550]),
-    TemplateData("template2.png", [30, 400, 100, 400], [1030, 1100, 900, 1200], [1000, 1050, 1030, 1250], [970, 1000, 1030, 1250]),
-    TemplateData("template3.png", [30, 150, 500, 700], [700, 800, 500, 700], [670, 720, 600, 700], [640, 690, 600, 700]),
+    TemplateData("template1.png", [60, 150, 60, 400], [460, 500, 250, 600], [450, 470, 400, 550], [430, 450, 400, 550], [40, 120, 400, 600]),
+    TemplateData("template2.png", [30, 400, 100, 400], [1030, 1100, 900, 1200], [1000, 1050, 1030, 1250], [970, 1000, 1030, 1250], [30, 400, 400, 900]),
+    TemplateData("template3.png", [30, 150, 500, 700], [700, 800, 500, 700], [670, 720, 600, 700], [640, 690, 600, 700], [30, 150, 500, 700]),
 ]
 
 print("input factuur:")
@@ -74,6 +75,12 @@ excl_vat = pytesseract.image_to_string(factuur_image[excl_vat_pos[0]:excl_vat_po
 excl_vat = re.sub(r'[^0-9,]', '', excl_vat)
 excl_vat = re.sub(",",".", excl_vat)
 print("amount excl vat = "+excl_vat)
+
+counterparty_pos = images[closest_img].counterparty_coordinates
+counterparty = pytesseract.image_to_string(factuur_image[counterparty_pos[0]:counterparty_pos[1], counterparty_pos[2]:counterparty_pos[3]])
+#excl_vat = re.sub(r'[^0-9,]', '', excl_vat)
+#excl_vat = re.sub(",",".", excl_vat)
+print("counterparty name = "+counterparty)
 
 if float(price) - float(vat) == float(excl_vat):
     print ("reconciliation = OK")
