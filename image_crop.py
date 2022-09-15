@@ -32,15 +32,16 @@ class TemplateData:
 
 images = [
     TemplateData("template1.png", [60, 150, 60, 400], [460, 500, 250, 600], [450, 470, 400, 550], [430, 450, 400, 550], [40, 120, 400, 600]),
-    TemplateData("template2.png", [30, 400, 100, 400], [1030, 1100, 900, 1200], [1000, 1050, 1030, 1250], [970, 1000, 1030, 1250], [30, 400, 400, 900]),
-    TemplateData("template3.png", [30, 150, 500, 700], [700, 800, 500, 700], [670, 720, 600, 700], [640, 690, 600, 700], [30, 150, 500, 700]),
+    TemplateData("template2.png", [30, 400, 100, 400], [1030, 1100, 900, 1200], [1000, 1050, 1030, 1250], [970, 1000, 1030, 1250], [110, 155, 950, 1250]),
+    TemplateData("template3.png", [30, 150, 500, 700], [700, 800, 500, 700], [670, 720, 600, 700], [640, 690, 600, 700], [210, 233, 30, 300]),
 ]
 
 print("input factuur:")
 factuur_image = cv2.imread(input())
-#factuur_image = cv2.imread("factuur1.png")
+#factuur_image = cv2.imread("factuur2.png")
 
-#logo_pos = [430, 450, 400, 550]
+#logo_pos = [110, 155, 950, 1250]
+
 #cv2.imshow("vat", factuur_image[logo_pos[0]:logo_pos[1], logo_pos[2]:logo_pos[3]])
 #cv2.waitKey(0)
 #cv2.destroyAllWindows()
